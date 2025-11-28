@@ -30,3 +30,6 @@ numpy==1.26.2
 # Additional utilities
 requests==2.31.0
 aiohttp==3.9.1
+
+# Supabase
+supabase==2.3.4

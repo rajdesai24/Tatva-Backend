@@ -10,7 +10,11 @@ class Settings(BaseSettings):
     CALIBRATION_TEMPERATURE: float = 1.45
     HOST: str = "0.0.0.0"  # Add this
     PORT: int = 8000        # Add this
-    
+
+    # Supabase configuration
+    SUPABASE_URL: str = ""
+    SUPABASE_KEY: str = ""
+
     class Config:
         env_file = ".env"
         extra = "ignore"  # Add this to ignore extra fields
