@@ -40,37 +40,20 @@ class TattvaAgent:
         """Main processing pipeline with async Supabase logging."""
         # Generate unique request ID for tracking
         request_id = str(uuid.uuid4())
+        supabase_logger.set_request_id(request_id)
 
         text = input_data.transcript.text
         beliefs = [b.dict() for b in input_data.beliefs] if input_data.beliefs else []
 
-        # Log agent start
-        await supabase_logger.log_agent_start(
-            request_id=request_id,
-            input_data={
-                "content_type": input_data.content_type,
-                "text_length": len(text),
-                "beliefs_count": len(beliefs)
-            }
-        )
-
         try:
+            # Log claim extraction start
+            await supabase_logger.log("started", "extracting claims")
             print("Step 1: Extracting claims...")
             claims = self.claim_extractor.extract_claims(text)
-
-            # Log claim extraction
-            await supabase_logger.log_step(
-                request_id=request_id,
-                step_name="claim_extraction",
-                step_data={"claims_count": len(claims)}
-            )
+            await supabase_logger.log("completed", f"extracted {len(claims)} claims")
 
             if not claims:
-                await supabase_logger.log_agent_complete(
-                    request_id=request_id,
-                    result={"message": "No verifiable claims found"},
-                    status="success"
-                )
+                await supabase_logger.log("completed", "no verifiable claims found")
                 return self._create_empty_output("No verifiable claims found in content.")
 
             print(f"Step 2-6: Processing {len(claims)} claims...")
@@ -80,72 +63,42 @@ class TattvaAgent:
                 print(f"  Processing claim {i+1}/{len(claims)}: {claim.get('text', '')[:50]}...")
 
                 # Query planning
+                await supabase_logger.log("started", f"planning query for claim {i+1}")
                 query_plan = self.query_planner.create_query_plan(claim)
                 claim['query_plan'] = query_plan
-
-                await supabase_logger.log_step(
-                    request_id=request_id,
-                    step_name=f"query_planning_claim_{i+1}",
-                    step_data={"claim_text": claim.get('text', '')[:100]}
-                )
+                await supabase_logger.log("completed", f"query plan created for claim {i+1}")
 
                 # Evidence gathering
+                await supabase_logger.log("started", f"gathering evidence for claim {i+1}")
                 evidence = self.evidence_gatherer.gather_evidence(claim, query_plan)
-
-                await supabase_logger.log_step(
-                    request_id=request_id,
-                    step_name=f"evidence_gathering_claim_{i+1}",
-                    step_data={"evidence_count": len(evidence) if isinstance(evidence, list) else 1}
-                )
+                await supabase_logger.log("completed", f"evidence gathered for claim {i+1}")
 
                 # Verdict synthesis
+                await supabase_logger.log("started", f"synthesizing verdict for claim {i+1}")
                 verdict_result = self.verdict_synthesizer.synthesize_verdict(claim, evidence)
                 claim['verdict'] = verdict_result['verdict']
                 claim['evidence_strength'] = verdict_result['evidence_strength']
-
-                await supabase_logger.log_step(
-                    request_id=request_id,
-                    step_name=f"verdict_synthesis_claim_{i+1}",
-                    step_data={
-                        "verdict": claim['verdict'].get('label'),
-                        "evidence_strength": claim['evidence_strength']
-                    }
-                )
+                await supabase_logger.log("completed", f"verdict synthesized for claim {i+1}")
 
                 processed_claims.append(claim)
 
+            # Score calculation
+            await supabase_logger.log("started", "calculating scores")
             print("Step 7: Calculating scores...")
             scores = self.scorer.calculate_scores(processed_claims, beliefs)
+            await supabase_logger.log("completed", "scores calculated")
 
-            await supabase_logger.log_step(
-                request_id=request_id,
-                step_name="score_calculation",
-                step_data={
-                    "tattva_score": scores['tattva_score'],
-                    "reality_distance": scores['reality_distance']
-                }
-            )
-
+            # Bias analysis
+            await supabase_logger.log("started", "analysing bias")
             print("Step 8: Analyzing bias...")
             bias_context = self.bias_analyzer.analyze_bias(text, processed_claims)
+            await supabase_logger.log("completed", "bias analysis completed")
 
-            await supabase_logger.log_step(
-                request_id=request_id,
-                step_name="bias_analysis",
-                step_data={
-                    "bias_signals_count": len(bias_context.get('bias_signals', [])),
-                    "rhetoric_count": len(bias_context.get('rhetoric', []))
-                }
-            )
-
+            # Summary generation
+            await supabase_logger.log("started", "generating summary")
             print("Step 9: Generating summary...")
             summary = self._generate_summary(text, len(processed_claims), scores['tattva_score'])
-
-            await supabase_logger.log_step(
-                request_id=request_id,
-                step_name="summary_generation",
-                step_data={"summary_length": len(summary)}
-            )
+            await supabase_logger.log("completed", "summary generated")
 
             limitations = self._identify_limitations(processed_claims, input_data)
 
@@ -158,26 +111,12 @@ class TattvaAgent:
                 limitations=limitations
             )
 
-            # Log successful completion
-            await supabase_logger.log_agent_complete(
-                request_id=request_id,
-                result={
-                    "claims_processed": len(processed_claims),
-                    "tattva_score": scores['tattva_score']
-                },
-                status="success"
-            )
-
+            await supabase_logger.log("completed", "processing complete")
             return output
 
         except Exception as e:
             # Log error
-            await supabase_logger.log_error(
-                request_id=request_id,
-                step="processing",
-                error_message=str(e),
-                error_data={"error_type": type(e).__name__}
-            )
+            await supabase_logger.log("error", f"processing failed: {str(e)}")
             raise
     
     def _generate_summary(self, text: str, num_claims: int, tattva_score: float) -> str:

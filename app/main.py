@@ -50,20 +50,10 @@ async def fact_check(input_data: TattvaInput, response: Response):
     """
     # Generate request ID for tracking
     request_id = str(uuid.uuid4())
+    supabase_logger.set_request_id(request_id)
 
     try:
-        # Log API request
-        await supabase_logger.log_event(
-            event_type="api_request",
-            request_id=request_id,
-            step="fact_check_endpoint",
-            data={
-                "content_type": input_data.content_type,
-                "has_transcript": bool(input_data.transcript and input_data.transcript.text),
-                "beliefs_count": len(input_data.beliefs) if input_data.beliefs else 0
-            },
-            status="in_progress"
-        )
+        await supabase_logger.log("started", "received fact-check request")
 
         if input_data.status != "Success":
             # Hardcode 200 status even for validation errors
@@ -73,16 +63,7 @@ async def fact_check(input_data: TattvaInput, response: Response):
                 "message": f"Input status is {input_data.status}, expected 'Success'",
                 "request_id": request_id
             }
-
-            await supabase_logger.log_event(
-                event_type="api_response",
-                request_id=request_id,
-                step="validation_error",
-                data=error_result,
-                status="error",
-                error=error_result["message"]
-            )
-
+            await supabase_logger.log("error", "validation failed: invalid input status")
             return error_result
 
         if not input_data.transcript.text:
@@ -93,16 +74,7 @@ async def fact_check(input_data: TattvaInput, response: Response):
                 "message": "Transcript text is empty",
                 "request_id": request_id
             }
-
-            await supabase_logger.log_event(
-                event_type="api_response",
-                request_id=request_id,
-                step="validation_error",
-                data=error_result,
-                status="error",
-                error=error_result["message"]
-            )
-
+            await supabase_logger.log("error", "validation failed: empty transcript")
             return error_result
 
         # Process the request
@@ -111,22 +83,11 @@ async def fact_check(input_data: TattvaInput, response: Response):
         # Hardcode 200 status for successful processing
         response.status_code = 200
 
-        # Log successful API response
-        await supabase_logger.log_event(
-            event_type="api_response",
-            request_id=request_id,
-            step="fact_check_complete",
-            data={
-                "claims_count": len(result.claims),
-                "tattva_score": result.tattva_score
-            },
-            status="success"
-        )
-
         # Return result with request_id
         result_dict = result.dict()
         result_dict["request_id"] = request_id
 
+        await supabase_logger.log("completed", "fact-check request completed successfully")
         return result_dict
 
     except Exception as e:
@@ -139,15 +100,7 @@ async def fact_check(input_data: TattvaInput, response: Response):
             "request_id": request_id
         }
 
-        await supabase_logger.log_event(
-            event_type="api_response",
-            request_id=request_id,
-            step="processing_error",
-            data=error_result,
-            status="error",
-            error=str(e)
-        )
-
+        await supabase_logger.log("error", f"request failed: {str(e)}")
         return error_result
 
 if __name__ == "__main__":

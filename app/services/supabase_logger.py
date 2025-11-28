@@ -1,20 +1,21 @@
 # app/services/supabase_logger.py
 import asyncio
-import json
 from datetime import datetime
-from typing import Any, Dict, Optional
+from typing import Optional
 from supabase import create_client, Client
 from app.config import get_settings
 import logging
+import uuid
 
 logger = logging.getLogger(__name__)
 
 class SupabaseLogger:
-    """Asynchronous logger for tracking agentic processing in Supabase."""
+    """Simple asynchronous logger for tracking service calls in Supabase."""
 
     def __init__(self):
         settings = get_settings()
         self.supabase: Optional[Client] = None
+        self.request_id: Optional[str] = None
 
         # Only initialize if credentials are provided
         if settings.SUPABASE_URL and settings.SUPABASE_KEY:
@@ -27,127 +28,50 @@ class SupabaseLogger:
         else:
             logger.warning("Supabase credentials not provided, logging disabled")
 
-    async def log_event(
-        self,
-        event_type: str,
-        request_id: str,
-        step: str,
-        data: Dict[str, Any],
-        status: str = "success",
-        error: Optional[str] = None
-    ) -> None:
+    def set_request_id(self, request_id: str) -> None:
+        """Set the request ID for this logging session."""
+        self.request_id = request_id
+
+    async def log(self, status: str, message: str) -> None:
         """
-        Asynchronously log an event to Supabase.
+        Log a simple status update to Supabase.
 
         Args:
-            event_type: Type of event (e.g., 'agent_start', 'claim_extraction', 'verdict')
-            request_id: Unique identifier for the request
-            step: Processing step name
-            data: Event data to log
-            status: Status of the event ('success', 'error', 'in_progress')
-            error: Error message if status is 'error'
+            status: Status of the operation (e.g., 'started', 'completed', 'error')
+            message: Description of what's happening (e.g., 'analysing bias')
         """
         if not self.supabase:
             # If Supabase is not configured, just log locally
-            logger.info(f"[{event_type}] {step}: {status}")
+            logger.info(f"[{status}] {message}")
             return
+
+        # Use existing request_id or generate new one
+        req_id = self.request_id or str(uuid.uuid4())
 
         # Run the database insert in a thread pool to avoid blocking
         await asyncio.get_event_loop().run_in_executor(
             None,
             self._insert_log,
-            event_type,
-            request_id,
-            step,
-            data,
+            req_id,
             status,
-            error
+            message
         )
 
-    def _insert_log(
-        self,
-        event_type: str,
-        request_id: str,
-        step: str,
-        data: Dict[str, Any],
-        status: str,
-        error: Optional[str]
-    ) -> None:
+    def _insert_log(self, request_id: str, status: str, message: str) -> None:
         """Internal method to insert log into Supabase (runs in thread pool)."""
         try:
             log_entry = {
-                "event_type": event_type,
                 "request_id": request_id,
-                "step": step,
-                "data": json.dumps(data) if isinstance(data, dict) else str(data),
                 "status": status,
-                "error": error,
+                "message": message,
                 "timestamp": datetime.utcnow().isoformat()
             }
 
             self.supabase.table("agent_logs").insert(log_entry).execute()
-            logger.debug(f"Logged event: {event_type} - {step}")
+            logger.debug(f"Logged: [{status}] {message}")
         except Exception as e:
             # Don't fail the main process if logging fails
-            logger.error(f"Failed to log event to Supabase: {e}")
-
-    async def log_agent_start(self, request_id: str, input_data: Dict[str, Any]) -> None:
-        """Log the start of agent processing."""
-        await self.log_event(
-            event_type="agent_start",
-            request_id=request_id,
-            step="initialization",
-            data=input_data,
-            status="in_progress"
-        )
-
-    async def log_agent_complete(
-        self,
-        request_id: str,
-        result: Dict[str, Any],
-        status: str = "success"
-    ) -> None:
-        """Log the completion of agent processing."""
-        await self.log_event(
-            event_type="agent_complete",
-            request_id=request_id,
-            step="finalization",
-            data=result,
-            status=status
-        )
-
-    async def log_step(
-        self,
-        request_id: str,
-        step_name: str,
-        step_data: Dict[str, Any],
-        status: str = "success"
-    ) -> None:
-        """Log a processing step."""
-        await self.log_event(
-            event_type="processing_step",
-            request_id=request_id,
-            step=step_name,
-            data=step_data,
-            status=status
-        )
-
-    async def log_error(
-        self,
-        request_id: str,
-        step: str,
-        error_message: str,
-        error_data: Optional[Dict[str, Any]] = None
-    ) -> None:
-        """Log an error during processing."""
-        await self.log_event(
-            event_type="error",
-            request_id=request_id,
-            step=step,
-            data=error_data or {},
-            status="error",
-            error=error_message
-        )
+            logger.error(f"Failed to log to Supabase: {e}")
 
 # Global instance
 supabase_logger = SupabaseLogger()
