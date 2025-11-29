@@ -16,6 +16,7 @@ import asyncio
 import logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
+from app.services.status_updater import StatusUpdater
 
 class TattvaAgent:
     def __init__(self):
@@ -25,7 +26,8 @@ class TattvaAgent:
         self.verdict_synthesizer = VerdictSynthesizer()
         self.bias_analyzer = BiasAnalyzer()
         self.scorer = Scorer()
-        
+        self.status_updater = StatusUpdater()
+
         settings = get_settings()
         self.llm = ChatGoogleGenerativeAI(
             model=settings.MODEL_NAME,
@@ -36,12 +38,18 @@ class TattvaAgent:
     
     async def process(self, input_data: TattvaInput) -> TattvaOutput:
         """Main processing pipeline."""
-        text = input_data.transcript.text
-        beliefs = [b.dict() for b in input_data.beliefs] if input_data.beliefs else []
+        print("input_data",input_data)
+        text = input_data["transcript"]["text"]
+        beliefs = [b.dict() for b in input_data["beliefs"]] if input_data["beliefs"] else []
         
         print("Step 1: Extracting claims...")
         claims = self.claim_extractor.extract_claims(text)
-        
+        await self.status_updater.update_status(
+           {   
+            "status":"STARTED",
+            "message":"Extracting Claims"}
+        )
+        await self.status_updater.update_separate_key({"claims":claims})
         if not claims:
             return self._create_empty_output("No verifiable claims found in content.")
         
@@ -52,26 +60,53 @@ class TattvaAgent:
             print(f"  Processing claim {i+1}/{len(claims)}: {claim.get('text', '')[:50]}...")
             
             query_plan = self.query_planner.create_query_plan(claim)
+            await self.status_updater.update_status(
+           {   
+            "status":"STARTED",
+            "message":"Creating Queries"} )
+
             claim['query_plan'] = query_plan
             
             evidence = self.evidence_gatherer.gather_evidence(claim, query_plan)
-            
+            await self.status_updater.update_status(
+           {   
+            "status":"STARTED",
+            "message":"Gathering Evidence"}
+            )
+
             verdict_result = self.verdict_synthesizer.synthesize_verdict(claim, evidence)
             claim['verdict'] = verdict_result['verdict']
             claim['evidence_strength'] = verdict_result['evidence_strength']
-            
+            await self.status_updater.update_status(
+           {   
+            "status":"STARTED",
+            "message":"Calculating Evidence Strength"}            )
+
             processed_claims.append(claim)
         
         print("Step 7: Calculating scores...")
         scores = self.scorer.calculate_scores(processed_claims, beliefs)
-        
+        await self.status_updater.update_status(
+           {   
+            "status":"STARTED",
+            "message":"Calculating Scores"}        )
+
         print("Step 8: Analyzing bias...")
         bias_context = self.bias_analyzer.analyze_bias(text, processed_claims)
-        
+        await self.status_updater.update_status(
+           {   
+            "status":"STARTED",
+            "message":"Analysing Biases"}        )
+
         print("Step 9: Generating summary...")
         summary = self._generate_summary(text, len(processed_claims), scores['tattva_score'])
-        
-        limitations = self._identify_limitations(processed_claims, input_data)
+        await self.status_updater.update_status(
+           {   
+            "status":"STARTED",
+            "message":"Generating Summary"}        )
+
+
+        # limitations = self._identify_limitations(processed_claims, input_data)
         
         output = TattvaOutput(
             summary=summary,
@@ -79,8 +114,11 @@ class TattvaAgent:
             tattva_score=scores['tattva_score'],
             reality_distance=scores['reality_distance'],
             bias_context=bias_context,
-            limitations=limitations
+
         )
+        await self.status_updater.update_analysis(output)
+
+
         
         return output
     

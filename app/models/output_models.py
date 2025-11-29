@@ -21,7 +21,7 @@ class Citation(BaseModel):
     url: str
     publisher: str
     date: Optional[str] = None
-    quote: Optional[str] = Field(None, max_length=250)
+    quote: Optional[str] = None  # No length restriction
 
 class ModalitiesCheck(BaseModel):
     ooc_risk: bool

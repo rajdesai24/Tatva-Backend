@@ -1,0 +1,295 @@
+{
+  "summary": "A fact-check analysis investigated the claim that scientists recently discovered drinking 8 glasses of water daily is essential for health, citing a 2024 Nature Medicine study. The analysis covered 4 related claims, resulting in an overall Tattva Score of 15.3.",
+  "claims": [
+    {
+      "id": "c1",
+      "text": "Drinking 8 glasses of water daily is essential for health.",
+      "type": "fact",
+      "prominence": 0.9,
+      "time_refs": [],
+      "named_entities": [],
+      "query_plan": [
+        {
+          "query": "is 8 glasses of water daily essential fact check",
+          "evidence_type": "factcheck",
+          "time_window": "2020-2024"
+        },
+        {
+          "query": "official daily water intake recommendations WHO CDC Mayo Clinic",
+          "evidence_type": "primary/official",
+          "time_window": "2020-2024"
+        },
+        {
+          "query": "optimal daily water intake scientific evidence individual variation",
+          "evidence_type": "academic",
+          "time_window": "2015-2024"
+        },
+        {
+          "query": "origin of 8 glasses of water rule myth debunked",
+          "evidence_type": "reference",
+          "time_window": "2010-2024"
+        },
+        {
+          "query": "factors influencing daily water needs activity climate diet",
+          "evidence_type": "academic",
+          "time_window": "2018-2024"
+        },
+        {
+          "query": "health consequences not meeting 8 glasses water daily",
+          "evidence_type": "academic",
+          "time_window": "2015-2024"
+        }
+      ],
+      "verdict": {
+        "label": "unverified",
+        "truth_prob": 0.5,
+        "truth_prob_cal": 0.5,
+        "explanation": "The provided evidence does not contain any information to support or refute the claim that drinking 8 glasses of water daily is essential for health. Therefore, the claim cannot be verified at this time. Further research is needed to determine its accuracy.",
+        "citations": [],
+        "gaps": [
+          "Scientific studies on optimal daily water intake for general health.",
+          "Recommendations from major health organizations (e.g., WHO, CDC, Mayo Clinic) regarding daily fluid consumption.",
+          "Evidence comparing health outcomes of individuals consuming 8 glasses versus other amounts of water daily."
+        ],
+        "modalities_check": {
+          "ooc_risk": false,
+          "notes": "The verdict reflects a lack of available evidence rather than a judgment on the claim's inherent truth or falsity. There is no content to be taken out of context."
+        }
+      },
+      "evidence_strength": 0.1
+    },
+    {
+      "id": "c2",
+      "text": "Scientists recently discovered that drinking 8 glasses of water daily is essential for health.",
+      "type": "fact",
+      "prominence": 0.8,
+      "time_refs": [
+        "2024"
+      ],
+      "named_entities": [
+        "Scientists"
+      ],
+      "query_plan": [
+        {
+          "query": "\"8 glasses of water daily essential\" fact check OR debunked OR myth",
+          "evidence_type": "factcheck",
+          "time_window": "2024"
+        },
+        {
+          "query": "current scientific guidelines daily water intake OR hydration recommendations \"recent discovery\"",
+          "evidence_type": "academic, primary/official",
+          "time_window": "2023-2024"
+        },
+        {
+          "query": "\"8 glasses of water daily\" origin OR history OR scientific basis OR evidence",
+          "evidence_type": "academic, reference, news",
+          "time_window": "last 5 years"
+        },
+        {
+          "query": "daily water intake individual needs OR personalized hydration science",
+          "evidence_type": "academic, reference",
+          "time_window": "last 5 years"
+        },
+        {
+          "query": "WHO OR CDC OR Mayo Clinic \"daily water intake recommendations\"",
+          "evidence_type": "primary/official, reference",
+          "time_window": "last 3 years"
+        },
+        {
+          "query": "is 8 glasses of water \"essential\" OR \"recommended\" for health science",
+          "evidence_type": "academic, factcheck",
+          "time_window": "last 5 years"
+        }
+      ],
+      "verdict": {
+        "label": "mostly_false",
+        "truth_prob": 0.25,
+        "truth_prob_cal": 0.31915372844070555,
+        "explanation": "The claim that scientists recently discovered drinking 8 glasses of water daily is essential for health is mostly false. While adequate hydration is crucial, the '8x8 rule' is a long-standing general guideline, not a recent scientific discovery, and individual fluid needs vary significantly. Experts emphasize listening to your body's thirst signals and considering factors like activity level, climate, and diet rather than adhering strictly to a universal fixed amount.",
+        "citations": [
+          {
+            "title": "How much water should you drink every day?",
+            "url": "https://www.health.harvard.edu/staying-healthy/how-much-water-should-you-drink-every-day",
+            "publisher": "Harvard Health Publishing",
+            "date": "2023-07-01",
+            "quote": "The recommendation to drink eight 8-ounce glasses of water a day is a long-standing guideline, not a recent discovery, and often more than many people need."
+          },
+          {
+            "title": "Water: How much should you drink every day?",
+            "url": "https://www.mayoclinic.org/healthy-lifestyle/nutrition-and-healthy-eating/in-depth/water/art-20044256",
+            "publisher": "Mayo Clinic",
+            "date": "2024-02-24",
+            "quote": "While the '8x8 rule' is easy to remember, it's not a scientific consensus. Your fluid needs depend on many factors, including health and activity."
+          },
+          {
+            "title": "Dietary Reference Intakes for Water, Potassium, Sodium, Chloride, and Sulfate",
+            "url": "https://www.ncbi.nlm.nih.gov/books/NBK56068/",
+            "publisher": "National Academies Press (via NCBI Bookshelf)",
+            "date": "2005-02-11",
+            "quote": "Healthy people adequately meet their daily hydration needs by letting thirst be their guide; total water intake includes beverages and food moisture."
+          }
+        ],
+        "gaps": [
+          "Specific peer-reviewed studies that directly refute a universal '8 glasses essential' rule for all individuals.",
+          "Detailed historical analysis of the origin and evolution of the '8x8 rule' to further contextualize the 'recently discovered' claim."
+        ],
+        "modalities_check": {
+          "ooc_risk": false,
+          "notes": "The claim combines a specific quantity with an assertion of 'recent discovery' and universal 'essential' status, which are the key points of inaccuracy."
+        }
+      },
+      "evidence_strength": 0.1
+    },
+    {
+      "id": "c3",
+      "text": "The study was published in Nature Medicine.",
+      "type": "fact",
+      "prominence": 0.7,
+      "time_refs": [],
+      "named_entities": [
+        "Nature Medicine"
+      ],
+      "query_plan": [
+        {
+          "query": "site:nature.com/nm \"[STUDY KEYWORDS/TITLE]\"",
+          "evidence_type": "primary/official",
+          "time_window": "all time"
+        },
+        {
+          "query": "pubmed \"[STUDY KEYWORDS/TITLE]\" \"Nature Medicine\"",
+          "evidence_type": "academic",
+          "time_window": "all time"
+        },
+        {
+          "query": "google scholar \"[STUDY KEYWORDS/TITLE]\" \"Nature Medicine\"",
+          "evidence_type": "academic",
+          "time_window": "all time"
+        },
+        {
+          "query": "\"Nature Medicine\" \"[STUDY KEYWORDS/TITLE]\" news release",
+          "evidence_type": "news",
+          "time_window": "past 2 years"
+        },
+        {
+          "query": "\"Nature Medicine\" \"[AUTHOR NAME]\" publications",
+          "evidence_type": "academic",
+          "time_window": "all time"
+        },
+        {
+          "query": "Nature Medicine \"latest issue\" \"recent articles\"",
+          "evidence_type": "primary/official",
+          "time_window": "past year"
+        },
+        {
+          "query": "\"[STUDY KEYWORDS/TITLE]\" published in \"Nature Medicine\"",
+          "evidence_type": "academic",
+          "time_window": "all time"
+        }
+      ],
+      "verdict": {
+        "label": "unverified",
+        "truth_prob": 0.5,
+        "truth_prob_cal": 0.5,
+        "explanation": "No evidence was found to confirm or deny the claim that the study was published in Nature Medicine. The search for relevant information was unsuccessful, meaning there is insufficient data to verify its publication status.",
+        "citations": [],
+        "gaps": [
+          "Direct search within Nature Medicine's publication archives for the specific study.",
+          "Information about the study's title, authors, or research topic to facilitate a targeted search."
+        ],
+        "modalities_check": {
+          "ooc_risk": false,
+          "notes": "No specific modalities (e.g., images, video) were provided for analysis, so out-of-context risks are not applicable."
+        }
+      },
+      "evidence_strength": 0.1
+    },
+    {
+      "id": "c4",
+      "text": "The study was published in 2024.",
+      "type": "fact",
+      "prominence": 0.7,
+      "time_refs": [
+        "2024"
+      ],
+      "named_entities": [],
+      "query_plan": [
+        {
+          "query": "\"[STUDY_TITLE_OR_KEYWORDS]\" \"publication date\" OR \"published\" 2024 site:scholar.google.com OR site:pubmed.ncbi.nlm.nih.gov OR site:sciencedirect.com",
+          "evidence_type": "academic",
+          "time_window": "2024"
+        },
+        {
+          "query": "\"[STUDY_TITLE_OR_KEYWORDS]\" journal OR publisher \"2024\" (inurl:article OR inurl:paper OR inurl:issue)",
+          "evidence_type": "primary/official",
+          "time_window": "2024"
+        },
+        {
+          "query": "\"[STUDY_TITLE_OR_KEYWORDS]\" \"published in 2024\" OR \"released in 2024\" news OR report",
+          "evidence_type": "news",
+          "time_window": "2024"
+        },
+        {
+          "query": "\"[STUDY_TITLE_OR_KEYWORDS]\" DOI OR abstract \"date published\" 2024",
+          "evidence_type": "primary/official",
+          "time_window": "2024"
+        },
+        {
+          "query": "\"[STUDY_TITLE_OR_KEYWORDS]\" arXiv OR bioRxiv OR medRxiv \"published 2024\" OR \"accepted 2024\"",
+          "evidence_type": "academic",
+          "time_window": "2023-2024"
+        },
+        {
+          "query": "\"[STUDY_TITLE_OR_KEYWORDS]\" \"publication year\" 2024 fact check OR verify",
+          "evidence_type": "factcheck",
+          "time_window": "2024"
+        }
+      ],
+      "verdict": {
+        "label": "unverified",
+        "truth_prob": 0.5,
+        "truth_prob_cal": 0.5,
+        "explanation": "No evidence was found to confirm or deny the claim that the study was published in 2024. The search for relevant information was unsuccessful, leaving the publication date unverified.",
+        "citations": [],
+        "gaps": [
+          "The actual study document or a reputable academic database entry listing its publication date.",
+          "News articles or press releases from the publishing institution or journal explicitly stating the publication year."
+        ],
+        "modalities_check": {
+          "ooc_risk": false,
+          "notes": "Since no evidence was found, there is no risk of misinterpreting information out of context."
+        }
+      },
+      "evidence_strength": 0.1
+    }
+  ],
+  "tattva_score": 15.332999443631117,
+  "reality_distance": {
+    "status": "needs_user_input",
+    "value": 0.0,
+    "notes": "No user beliefs provided. Create belief sliders to measure Reality Distance."
+  },
+  "bias_context": {
+    "bias_signals": [
+      "Selective framing: The content presents a single study's finding as a universal, definitive truth ('essential for health') without acknowledging individual variability, the broader scientific context, or the nuances typically associated with research findings.",
+      "Strong, definitive language: The use of 'essential for health' is a strong claim that can overstate the implications of a single study, potentially creating a sense of urgency or necessity that might not be fully warranted without further context and qualification."
+    ],
+    "rhetoric": [
+      "Appeal to authority: The statement leverages the credibility of 'Scientists recently discovered' and 'published in Nature Medicine in 2024' to support the claim without providing any details about the study's methodology, scope, limitations, or specific findings.",
+      "Oversimplification/Hasty generalization: A complex physiological need (hydration) is reduced to a simple, one-size-fits-all recommendation ('8 glasses daily') based on a single, recent finding, potentially ignoring the vast individual differences in hydration requirements."
+    ],
+    "missing_context": [
+      "Definition of '8 glasses': The volume of a 'glass' is undefined, making the recommendation impractical and ambiguous.",
+      "Individual variability: Hydration needs vary significantly based on factors such as activity level, climate, body size, diet, health conditions, and other fluid intake (from food and beverages). The statement presents a universal recommendation without acknowledging these differences.",
+      "Study details: Crucial information about the study's methodology (e.g., type of study, sample size, demographics, duration), specific outcomes measured to determine 'essential for health,' and any limitations or caveats are absent.",
+      "Broader scientific consensus: The content does not contextualize this 'new discovery' within existing scientific literature or long-standing recommendations regarding hydration, which often emphasize individual needs and drinking to thirst.",
+      "Nuance of 'essential': The term 'essential' is used without defining what level of health impact, risk, or physiological necessity is implied, which can be misleading."
+    ],
+    "notes": "The content is not neutral. It presents a complex health recommendation as a simple, universally applicable, recently discovered 'fact.' It relies heavily on an appeal to authority (reputable journal, recent date) without providing any substantive details about the study itself. This framing oversimplifies a nuanced topic, potentially overstates the implications of a single research finding, and lacks critical context necessary for a balanced and accurate understanding of hydration science."
+  },
+  "limitations": [
+    "3 claims could not be verified due to insufficient evidence",
+    "4 claims have weak supporting evidence",
+    "Analysis based on transcript only; visual elements not verified",
+    "Search returned limited results for 4 claims"
+  ]
+}

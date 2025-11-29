@@ -4,7 +4,7 @@ from functools import lru_cache
 
 class Settings(BaseSettings):
     GOOGLE_API_KEY: str
-    MODEL_NAME: str = "gemini-2.5-flash"
+    MODEL_NAME: str = "gemini-2.5-flash-live"
     TEMPERATURE: float = 0.3
     MAX_TOKENS: int = 8000
     CALIBRATION_TEMPERATURE: float = 1.45

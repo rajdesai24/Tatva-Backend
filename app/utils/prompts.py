@@ -11,6 +11,7 @@ Extract claims following these rules:
 4. Assign prominence (0-1) based on centrality to the content
 5. Extract named entities and time references
 6. Classify as: fact, prediction, or opinion_with_fact_core
+7. Extract only key claims not more than 5 claims
 
 Return a JSON array of claims with structure:
 {{
@@ -54,6 +55,8 @@ Return JSON:
 
 Only return valid JSON, no additional text."""
 
+
+
 EVIDENCE_EVALUATION_PROMPT = """You are an expert evidence evaluator. Rate these search results for the given claim.
 
 Claim: {claim_text}
@@ -64,7 +67,9 @@ For each relevant source, evaluate:
 2. Credibility (0-1): based on publisher reputation, primary vs secondary source
 3. Specificity (0-1): how directly it addresses the claim
 4. Recency (0-1): how recent and relevant
-5. Quote: extract ≤50 word verbatim quote
+5. Quote: extract a SHORT, ESSENTIAL verbatim quote (15-30 words maximum) that captures the key evidence
+
+CRITICAL: Quotes must be BRIEF (under 30 words). Extract only the most relevant sentence fragment.
 
 Return JSON:
 {{
@@ -74,7 +79,7 @@ Return JSON:
       "publisher": "name",
       "date": "YYYY-MM-DD",
       "stance": "supports",
-      "quote": "exact quote",
+      "quote": "brief exact quote under 30 words",
       "credibility": 0.9,
       "specificity": 0.8,
       "recency": 0.7
@@ -83,6 +88,7 @@ Return JSON:
   "overall_assessment": "brief summary"
 }}
 
+Remember: Keep quotes SHORT and ESSENTIAL (under 30 words).
 Only return valid JSON, no additional text."""
 
 VERDICT_SYNTHESIS_PROMPT = """You are an expert fact-checker. Synthesize a verdict from the evidence.
@@ -104,6 +110,8 @@ Determine:
 5. Gaps: what evidence would strengthen this verdict
 6. Modality check: any out-of-context risks
 
+CRITICAL: For citations, include SHORT quotes (15-30 words maximum). Extract only the most essential evidence.
+
 Return JSON:
 {{
   "verdict": {{
@@ -116,7 +124,7 @@ Return JSON:
         "url": "https://...",
         "publisher": "...",
         "date": "2024-01-15",
-        "quote": "..."
+        "quote": "brief essential quote under 30 words"
       }}
     ],
     "gaps": ["..."],
@@ -127,6 +135,7 @@ Return JSON:
   }}
 }}
 
+Remember: Keep quotes BRIEF (under 30 words) and focused on key evidence.
 Only return valid JSON, no additional text."""
 
 BIAS_ANALYSIS_PROMPT = """You are an expert bias detector. Analyze this content for bias and context issues.
@@ -161,3 +170,7 @@ Overall Tattva Score: {tattva_score}
 Provide a neutral, informative summary that captures the main findings.
 
 Return only the summary text, no JSON."""
+
+
+
+

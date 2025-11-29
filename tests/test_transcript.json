@@ -1,0 +1,827 @@
+[
+  {
+    "text": "You know, I don't want to make videos",
+    "start": 0.08,
+    "duration": 5.199
+  },
+  {
+    "text": "about Microsoft. I don't desire to crap",
+    "start": 1.6,
+    "duration": 5.52
+  },
+  {
+    "text": "on what they're creating to yuck their",
+    "start": 5.279,
+    "duration": 3.761
+  },
+  {
+    "text": "yum. But sometimes they do things that",
+    "start": 7.12,
+    "duration": 3.84
+  },
+  {
+    "text": "are so stupid that I just have to. And",
+    "start": 9.04,
+    "duration": 3.84
+  },
+  {
+    "text": "and I I thought to myself, \"Okay, I'm",
+    "start": 10.96,
+    "duration": 3.839
+  },
+  {
+    "text": "done. They've already hit the lowest bar",
+    "start": 12.88,
+    "duration": 3.76
+  },
+  {
+    "text": "with the Nentic OS.\" And I was actually",
+    "start": 14.799,
+    "duration": 5.201
+  },
+  {
+    "text": "wrong. I was actually incorrect. This is",
+    "start": 16.64,
+    "duration": 6.0
+  },
+  {
+    "text": "turning into a series, and I don't think",
+    "start": 20.0,
+    "duration": 4.72
+  },
+  {
+    "text": "this series is good for the world.",
+    "start": 22.64,
+    "duration": 4.719
+  },
+  {
+    "text": "Welcome to Microsoft Did That Again. So,",
+    "start": 24.72,
+    "duration": 3.6
+  },
+  {
+    "text": "today we're going to look at this.",
+    "start": 27.359,
+    "duration": 3.361
+  },
+  {
+    "text": "Microsoft admitted that File Explorer is",
+    "start": 28.32,
+    "duration": 4.48
+  },
+  {
+    "text": "slow and can take longer than usual to",
+    "start": 30.72,
+    "duration": 3.92
+  },
+  {
+    "text": "load, and they're going to fix it in the",
+    "start": 32.8,
+    "duration": 4.8
+  },
+  {
+    "text": "Windows 11 update. Okay, very cool.",
+    "start": 34.64,
+    "duration": 5.04
+  },
+  {
+    "text": "Microsoft is finally addressing this",
+    "start": 37.6,
+    "duration": 3.52
+  },
+  {
+    "text": "problem that's been going around that",
+    "start": 39.68,
+    "duration": 3.36
+  },
+  {
+    "text": "you see posted all over the place.",
+    "start": 41.12,
+    "duration": 3.84
+  },
+  {
+    "text": "Windows Explorer is kind of slow, which",
+    "start": 43.04,
+    "duration": 3.519
+  },
+  {
+    "text": "is a little bit ridiculous cuz when you",
+    "start": 44.96,
+    "duration": 3.759
+  },
+  {
+    "text": "think about it, Windows Explorer is just",
+    "start": 46.559,
+    "duration": 6.241
+  },
+  {
+    "text": "a GU wrapper over LS. Like that's what",
+    "start": 48.719,
+    "duration": 5.68
+  },
+  {
+    "text": "else are you doing in this? Okay, yeah,",
+    "start": 52.8,
+    "duration": 3.36
+  },
+  {
+    "text": "there's a few other features. I get it.",
+    "start": 54.399,
+    "duration": 3.921
+  },
+  {
+    "text": "But there's a lot of complicated apps.",
+    "start": 56.16,
+    "duration": 5.039
+  },
+  {
+    "text": "Showing a file in a directory just can't",
+    "start": 58.32,
+    "duration": 4.96
+  },
+  {
+    "text": "it just I refuse to accept it. I don't",
+    "start": 61.199,
+    "duration": 3.841
+  },
+  {
+    "text": "care what people say. When people say,",
+    "start": 63.28,
+    "duration": 3.28
+  },
+  {
+    "text": "\"Oh, no. It's trust me, bro. It's",
+    "start": 65.04,
+    "duration": 2.8
+  },
+  {
+    "text": "really, really complicated.\" I'm like,",
+    "start": 66.56,
+    "duration": 3.28
+  },
+  {
+    "text": "\"No, there's no way it's complicated.\"",
+    "start": 67.84,
+    "duration": 3.76
+  },
+  {
+    "text": "You know how I know? Because this thing",
+    "start": 69.84,
+    "duration": 5.44
+  },
+  {
+    "text": "right here, File Pilot, 2.06 megabytes",
+    "start": 71.6,
+    "duration": 6.4
+  },
+  {
+    "text": "for the executable size. It's so small",
+    "start": 75.28,
+    "duration": 4.32
+  },
+  {
+    "text": "that people don't even think it's real.",
+    "start": 78.0,
+    "duration": 3.2
+  },
+  {
+    "text": "It's so small, in fact, that Windows",
+    "start": 79.6,
+    "duration": 4.0
+  },
+  {
+    "text": "keeps identifying it as a virus. It can",
+    "start": 81.2,
+    "duration": 4.48
+  },
+  {
+    "text": "open up the file explorer in 300",
+    "start": 83.6,
+    "duration": 3.92
+  },
+  {
+    "text": "milliseconds and a portion of that time",
+    "start": 85.68,
+    "duration": 4.72
+  },
+  {
+    "text": "is purely spent on glennnit. No, really,",
+    "start": 87.52,
+    "duration": 5.04
+  },
+  {
+    "text": "it does. It boots up in literally like",
+    "start": 90.4,
+    "duration": 4.32
+  },
+  {
+    "text": "300 milliseconds. The creator was",
+    "start": 92.56,
+    "duration": 4.08
+  },
+  {
+    "text": "inspired by a little babyfaced Casey",
+    "start": 94.72,
+    "duration": 3.52
+  },
+  {
+    "text": "Miry right there. There's a little",
+    "start": 96.64,
+    "duration": 4.64
+  },
+  {
+    "text": "handmade hero. Oh my gosh. So, you can't",
+    "start": 98.24,
+    "duration": 4.879
+  },
+  {
+    "text": "tell me that it's impossibly hard to",
+    "start": 101.28,
+    "duration": 3.519
+  },
+  {
+    "text": "write one of these. That people can do",
+    "start": 103.119,
+    "duration": 4.0
+  },
+  {
+    "text": "it. Okay, just one engineer can do it.",
+    "start": 104.799,
+    "duration": 4.96
+  },
+  {
+    "text": "So surely Microsoft is going to provide",
+    "start": 107.119,
+    "duration": 5.521
+  },
+  {
+    "text": "us with an incredible set of details",
+    "start": 109.759,
+    "duration": 4.481
+  },
+  {
+    "text": "about how they're going to fix this",
+    "start": 112.64,
+    "duration": 3.839
+  },
+  {
+    "text": "problem. Microsoft plans to preload the",
+    "start": 114.24,
+    "duration": 4.479
+  },
+  {
+    "text": "file explorer when you boot your PC. I",
+    "start": 116.479,
+    "duration": 3.521
+  },
+  {
+    "text": "don't even know what to say to this.",
+    "start": 118.719,
+    "duration": 4.08
+  },
+  {
+    "text": "Like honestly, like Okay. Okay. First",
+    "start": 120.0,
+    "duration": 4.88
+  },
+  {
+    "text": "off, I'm not going to blame the thing",
+    "start": 122.799,
+    "duration": 3.761
+  },
+  {
+    "text": "that everybody thinks I'm going to",
+    "start": 124.88,
+    "duration": 3.76
+  },
+  {
+    "text": "blame, okay? Cuz I'm not going to do it.",
+    "start": 126.56,
+    "duration": 5.84
+  },
+  {
+    "text": "No. No. I refuse to accept it. You know",
+    "start": 128.64,
+    "duration": 6.319
+  },
+  {
+    "text": "why? is these type of idiotic decisions",
+    "start": 132.4,
+    "duration": 4.96
+  },
+  {
+    "text": "can't come from something so stupid as",
+    "start": 134.959,
+    "duration": 4.241
+  },
+  {
+    "text": "an LLM. Okay? They don't have the",
+    "start": 137.36,
+    "duration": 4.32
+  },
+  {
+    "text": "creativity to make this bad of a",
+    "start": 139.2,
+    "duration": 4.56
+  },
+  {
+    "text": "decision. This kind of decision can only",
+    "start": 141.68,
+    "duration": 5.04
+  },
+  {
+    "text": "come from an agentic manager. Okay? This",
+    "start": 143.76,
+    "duration": 5.199
+  },
+  {
+    "text": "is somebody who's bought the Kool-Aid",
+    "start": 146.72,
+    "duration": 4.64
+  },
+  {
+    "text": "who all eyes are on the prize and so",
+    "start": 148.959,
+    "duration": 4.961
+  },
+  {
+    "text": "they just take the weirdest shortcuts to",
+    "start": 151.36,
+    "duration": 5.44
+  },
+  {
+    "text": "make things work because this is not an",
+    "start": 153.92,
+    "duration": 4.64
+  },
+  {
+    "text": "engineering solution. You cannot tell me",
+    "start": 156.8,
+    "duration": 3.2
+  },
+  {
+    "text": "this is an engineering solution. I",
+    "start": 158.56,
+    "duration": 3.92
+  },
+  {
+    "text": "refuse to believe that you need to have",
+    "start": 160.0,
+    "duration": 5.36
+  },
+  {
+    "text": "a background worker to show a set of",
+    "start": 162.48,
+    "duration": 5.6
+  },
+  {
+    "text": "files. This is not it's not real.",
+    "start": 165.36,
+    "duration": 5.68
+  },
+  {
+    "text": "Microsoft, this can't be real. But",
+    "start": 168.08,
+    "duration": 4.72
+  },
+  {
+    "text": "Microsoft decided not to stop there with",
+    "start": 171.04,
+    "duration": 3.279
+  },
+  {
+    "text": "its updates. It's decided that it's",
+    "start": 172.8,
+    "duration": 3.04
+  },
+  {
+    "text": "going to make the next greatest update",
+    "start": 174.319,
+    "duration": 3.841
+  },
+  {
+    "text": "ever. You know that old program Notepad?",
+    "start": 175.84,
+    "duration": 4.0
+  },
+  {
+    "text": "Yeah, you know that one that no one",
+    "start": 178.16,
+    "duration": 3.76
+  },
+  {
+    "text": "really liked, tab indenting was eight",
+    "start": 179.84,
+    "duration": 3.84
+  },
+  {
+    "text": "spaces. And hey, you just used it when",
+    "start": 181.92,
+    "duration": 3.44
+  },
+  {
+    "text": "you got to use it. Okay, we all edited",
+    "start": 183.68,
+    "duration": 3.44
+  },
+  {
+    "text": "in any file from time to time in",
+    "start": 185.36,
+    "duration": 3.84
+  },
+  {
+    "text": "Notepad. Not a big deal. Well, Microsoft",
+    "start": 187.12,
+    "duration": 3.199
+  },
+  {
+    "text": "decided, you know what you need in",
+    "start": 189.2,
+    "duration": 3.92
+  },
+  {
+    "text": "Notepad. You need tables. Okay, we need",
+    "start": 190.319,
+    "duration": 5.2
+  },
+  {
+    "text": "to have the ability to have tables. Ask",
+    "start": 193.12,
+    "duration": 5.52
+  },
+  {
+    "text": "literally nobody ever, but Notepad would",
+    "start": 195.519,
+    "duration": 5.121
+  },
+  {
+    "text": "like to deliver that to you. But Notepad",
+    "start": 198.64,
+    "duration": 3.84
+  },
+  {
+    "text": "said, \"Wait a second.\" Okay, there's so",
+    "start": 200.64,
+    "duration": 3.76
+  },
+  {
+    "text": "much more room in this bad boy. They're",
+    "start": 202.48,
+    "duration": 4.32
+  },
+  {
+    "text": "going to fit streaming AI results in",
+    "start": 204.4,
+    "duration": 4.08
+  },
+  {
+    "text": "here. Is that right? I MEAN, THEY",
+    "start": 206.8,
+    "duration": 4.64
+  },
+  {
+    "text": "ACTUALLY I JUST GET so frustrated",
+    "start": 208.48,
+    "duration": 4.8
+  },
+  {
+    "text": "thinking about this. They actually are",
+    "start": 211.44,
+    "duration": 5.28
+  },
+  {
+    "text": "going to make Notepad into an AI. Yes.",
+    "start": 213.28,
+    "duration": 5.44
+  },
+  {
+    "text": "The program that probably has not been",
+    "start": 216.72,
+    "duration": 5.76
+  },
+  {
+    "text": "updated since Windows 95 has decided",
+    "start": 218.72,
+    "duration": 6.0
+  },
+  {
+    "text": "this year they're going to start running",
+    "start": 222.48,
+    "duration": 3.679
+  },
+  {
+    "text": "with it. They're going to make the next",
+    "start": 224.72,
+    "duration": 3.599
+  },
+  {
+    "text": "Obsidian competitor by making it",
+    "start": 226.159,
+    "duration": 5.281
+  },
+  {
+    "text": "Microsoft version of it. Notepad. This",
+    "start": 228.319,
+    "duration": 5.2
+  },
+  {
+    "text": "is the new Notepad++. Okay. Not the old",
+    "start": 231.44,
+    "duration": 4.96
+  },
+  {
+    "text": "Notepad++, the new Notepad. All right.",
+    "start": 233.519,
+    "duration": 5.44
+  },
+  {
+    "text": "This one is going to be used to monetize",
+    "start": 236.4,
+    "duration": 4.479
+  },
+  {
+    "text": "people. I swear you're going to need a",
+    "start": 238.959,
+    "duration": 4.721
+  },
+  {
+    "text": "Notepad subscription here within a year.",
+    "start": 240.879,
+    "duration": 6.321
+  },
+  {
+    "text": "It's going to feel horrible. Imagine,",
+    "start": 243.68,
+    "duration": 6.16
+  },
+  {
+    "text": "imagine opening up Notepad and getting",
+    "start": 247.2,
+    "duration": 4.0
+  },
+  {
+    "text": "hit with a, \"Hey, would you like to log",
+    "start": 249.84,
+    "duration": 4.479
+  },
+  {
+    "text": "into One Drive first?\" Oh, please. When",
+    "start": 251.2,
+    "duration": 5.279
+  },
+  {
+    "text": "will the beating stop? But I do actually",
+    "start": 254.319,
+    "duration": 3.681
+  },
+  {
+    "text": "have some pretty incredible news in all",
+    "start": 256.479,
+    "duration": 3.361
+  },
+  {
+    "text": "of this. I think Microsoft has so",
+    "start": 258.0,
+    "duration": 3.359
+  },
+  {
+    "text": "thoroughly fumbled the bag that",
+    "start": 259.84,
+    "duration": 3.12
+  },
+  {
+    "text": "something magical has happened. Look at",
+    "start": 261.359,
+    "duration": 5.12
+  },
+  {
+    "text": "this. It took 8 years to go from 1% to",
+    "start": 262.96,
+    "duration": 6.239
+  },
+  {
+    "text": "2%. By Prael, what what are what are",
+    "start": 266.479,
+    "duration": 5.361
+  },
+  {
+    "text": "they talking about? This is internet",
+    "start": 269.199,
+    "duration": 6.641
+  },
+  {
+    "text": "desktop traffic from Linux machines. In",
+    "start": 271.84,
+    "duration": 7.28
+  },
+  {
+    "text": "2021, it got up to 2%. By 2023, we are",
+    "start": 275.84,
+    "duration": 6.56
+  },
+  {
+    "text": "up to 3%. By 2024, we are up to 4%. In",
+    "start": 279.12,
+    "duration": 8.96
+  },
+  {
+    "text": "June this year, 5% over 5% in the United",
+    "start": 282.4,
+    "duration": 9.44
+  },
+  {
+    "text": "States of America has officially used",
+    "start": 288.08,
+    "duration": 6.399
+  },
+  {
+    "text": "Linux as their desktop browsing",
+    "start": 291.84,
+    "duration": 4.88
+  },
+  {
+    "text": "experience. This is a milestone, people.",
+    "start": 294.479,
+    "duration": 4.241
+  },
+  {
+    "text": "Okay? I understand normies are never",
+    "start": 296.72,
+    "duration": 4.0
+  },
+  {
+    "text": "going to be using Linux. Okay. Or some",
+    "start": 298.72,
+    "duration": 3.84
+  },
+  {
+    "text": "most normies. Okay. Grandma's out there.",
+    "start": 300.72,
+    "duration": 3.919
+  },
+  {
+    "text": "They're just not installing they're just",
+    "start": 302.56,
+    "duration": 4.0
+  },
+  {
+    "text": "not installing Arch. Okay. Even I know",
+    "start": 304.639,
+    "duration": 3.921
+  },
+  {
+    "text": "Omachi makes it easy. They're still not",
+    "start": 306.56,
+    "duration": 4.079
+  },
+  {
+    "text": "the target market. But nonetheless, like",
+    "start": 308.56,
+    "duration": 4.0
+  },
+  {
+    "text": "you we're seeing in real time, we're",
+    "start": 310.639,
+    "duration": 5.441
+  },
+  {
+    "text": "seeing a shift happening. Is Microsoft's",
+    "start": 312.56,
+    "duration": 6.4
+  },
+  {
+    "text": "inability to write a file explorer/",
+    "start": 316.08,
+    "duration": 5.36
+  },
+  {
+    "text": "their non-stop desire to shove AI into",
+    "start": 318.96,
+    "duration": 4.16
+  },
+  {
+    "text": "everything the cause of it? Is it",
+    "start": 321.44,
+    "duration": 4.16
+  },
+  {
+    "text": "Apple's inability to somehow design",
+    "start": 323.12,
+    "duration": 4.72
+  },
+  {
+    "text": "nicel looking things? Now I who would",
+    "start": 325.6,
+    "duration": 3.36
+  },
+  {
+    "text": "have guessed that would have happened in",
+    "start": 327.84,
+    "duration": 3.44
+  },
+  {
+    "text": "the ever marching expensiveness of their",
+    "start": 328.96,
+    "duration": 5.36
+  },
+  {
+    "text": "products or is Linux actually just that",
+    "start": 331.28,
+    "duration": 4.96
+  },
+  {
+    "text": "good these days? Is it actually",
+    "start": 334.32,
+    "duration": 4.159
+  },
+  {
+    "text": "happening without billions upon billions",
+    "start": 336.24,
+    "duration": 3.92
+  },
+  {
+    "text": "of dollars and thousands of engineers",
+    "start": 338.479,
+    "duration": 4.401
+  },
+  {
+    "text": "working on it simultaneously non-stop",
+    "start": 340.16,
+    "duration": 4.879
+  },
+  {
+    "text": "24/7? The year of the Linux desktop was",
+    "start": 342.88,
+    "duration": 3.599
+  },
+  {
+    "text": "always kind of a joke. A little bit of a",
+    "start": 345.039,
+    "duration": 2.961
+  },
+  {
+    "text": "meme. Maybe it's not. Hey, I hope you",
+    "start": 346.479,
+    "duration": 3.121
+  },
+  {
+    "text": "liked this video. I really was just I",
+    "start": 348.0,
+    "duration": 3.36
+  },
+  {
+    "text": "got I was very excited about yapping",
+    "start": 349.6,
+    "duration": 3.439
+  },
+  {
+    "text": "about it and I'm very excited. Again,",
+    "start": 351.36,
+    "duration": 2.96
+  },
+  {
+    "text": "just want to say a special thank you.",
+    "start": 353.039,
+    "duration": 2.561
+  },
+  {
+    "text": "Thank you for, you know, getting me",
+    "start": 354.32,
+    "duration": 3.439
+  },
+  {
+    "text": "there. That million. So close. We are",
+    "start": 355.6,
+    "duration": 4.319
+  },
+  {
+    "text": "like 45,000 out from a million. Okay,",
+    "start": 357.759,
+    "duration": 4.72
+  },
+  {
+    "text": "that's a big number. I get an M and a",
+    "start": 359.919,
+    "duration": 4.4
+  },
+  {
+    "text": "gold plaque and my wife might finally",
+    "start": 362.479,
+    "duration": 4.641
+  },
+  {
+    "text": "respect me. Anyways, like, subscribe.",
+    "start": 364.319,
+    "duration": 4.641
+  },
+  {
+    "text": "The name",
+    "start": 367.12,
+    "duration": 4.56
+  },
+  {
+    "text": "is the primogen.",
+    "start": 368.96,
+    "duration": 2.72
+  }
+]
