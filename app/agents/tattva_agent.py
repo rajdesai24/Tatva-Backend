@@ -36,20 +36,21 @@ class TattvaAgent:
             max_output_tokens=settings.MAX_TOKENS
         )
     
-    async def process(self, input_data: TattvaInput) -> TattvaOutput:
+    async def process(self, input_data) -> TattvaOutput:
         """Main processing pipeline."""
         print("input_data",input_data)
         text = input_data["transcript"]["text"]
+        url=input_data['url']
         beliefs = [b.dict() for b in input_data["beliefs"]] if input_data["beliefs"] else []
         
         print("Step 1: Extracting claims...")
-        claims = self.claim_extractor.extract_claims(text)
         await self.status_updater.update_status(
            {   
             "status":"STARTED",
-            "message":"Extracting Claims"}
+            "message":"Extracting Claims"},url
         )
-        await self.status_updater.update_separate_key({"claims":claims})
+        claims = self.claim_extractor.extract_claims(text)
+        await self.status_updater.update_separate_key("claims",claims,url)
         if not claims:
             return self._create_empty_output("No verifiable claims found in content.")
         
@@ -58,56 +59,57 @@ class TattvaAgent:
         
         for i, claim in enumerate(claims):
             print(f"  Processing claim {i+1}/{len(claims)}: {claim.get('text', '')[:50]}...")
-            
+            await self.status_updater.update_status({   
+                    "status":"STARTED",
+                    "message":"Creating Queries"},url)
             query_plan = self.query_planner.create_query_plan(claim)
-            await self.status_updater.update_status(
-           {   
-            "status":"STARTED",
-            "message":"Creating Queries"} )
+          
 
             claim['query_plan'] = query_plan
-            
-            evidence = self.evidence_gatherer.gather_evidence(claim, query_plan)
             await self.status_updater.update_status(
            {   
             "status":"STARTED",
-            "message":"Gathering Evidence"}
+            "message":"Gathering Evidence"},url
             )
 
+            evidence = self.evidence_gatherer.gather_evidence(claim, query_plan)
             verdict_result = self.verdict_synthesizer.synthesize_verdict(claim, evidence)
             claim['verdict'] = verdict_result['verdict']
-            claim['evidence_strength'] = verdict_result['evidence_strength']
             await self.status_updater.update_status(
            {   
             "status":"STARTED",
-            "message":"Calculating Evidence Strength"}            )
+            "message":"Calculating Evidence Strength"}  ,url )
+            claim['evidence_strength'] = verdict_result['evidence_strength']
 
             processed_claims.append(claim)
-        
+        await self.status_updater.update_processed_claims("claims",processed_claims,url)
+
         print("Step 7: Calculating scores...")
-        scores = self.scorer.calculate_scores(processed_claims, beliefs)
         await self.status_updater.update_status(
            {   
             "status":"STARTED",
-            "message":"Calculating Scores"}        )
+            "message":"Calculating Scores"} ,url)
 
+        scores = self.scorer.calculate_scores(processed_claims, beliefs)
+        await self.status_updater.update_separate_key("scores",scores,url)
+        await self.status_updater.update_status(
+           {   
+            "status":"STARTED",
+            "message":"Analysing Biases"} ,url)
         print("Step 8: Analyzing bias...")
         bias_context = self.bias_analyzer.analyze_bias(text, processed_claims)
+        await self.status_updater.update_separate_key("bias_context",bias_context,url,url)
         await self.status_updater.update_status(
            {   
             "status":"STARTED",
-            "message":"Analysing Biases"}        )
-
+            "message":"Generating Summary"},url)
         print("Step 9: Generating summary...")
         summary = self._generate_summary(text, len(processed_claims), scores['tattva_score'])
-        await self.status_updater.update_status(
-           {   
-            "status":"STARTED",
-            "message":"Generating Summary"}        )
+        await self.status_updater.update_separate_key("summary",summary,url)
 
 
-        # limitations = self._identify_limitations(processed_claims, input_data)
-        
+        limitations = self._identify_limitations(processed_claims, input_data)
+        await self.status_updater.update_separate_key("limitations",limitations,url)
         output = TattvaOutput(
             summary=summary,
             claims=processed_claims,
@@ -139,7 +141,7 @@ class TattvaAgent:
 
         return response.content.strip()
     
-    def _identify_limitations(self, claims: List[Dict], input_data: TattvaInput) -> List[str]:
+    def _identify_limitations(self, claims: List[Dict], input_data) -> List[str]:
         """Identify limitations in the analysis."""
         limitations = []
         
@@ -151,7 +153,7 @@ class TattvaAgent:
         if low_evidence > 0:
             limitations.append(f"{low_evidence} claims have weak supporting evidence")
         
-        if input_data.content_type == "youtube":
+        if input_data["content_type"] == "youtube":
             limitations.append("Analysis based on transcript only; visual elements not verified")
         
         time_ambiguous = sum(1 for c in claims if not c.get('time_refs'))

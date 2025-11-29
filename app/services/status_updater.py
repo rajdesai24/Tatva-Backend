@@ -2,6 +2,7 @@ from supabase import create_client, Client
 from app.config import get_settings
 from datetime import datetime
 import logging
+from fastapi.concurrency import run_in_threadpool
 
 logger = logging.getLogger(__name__)
 
@@ -42,7 +43,7 @@ class StatusUpdater:
             
     async def update_status(
         self, 
-        logs
+        logs,url
     ):
         """Update processing status in Supabase."""
         try:
@@ -54,7 +55,7 @@ class StatusUpdater:
                 self.supabase
                     .table("reports")
                     .select("report_id")
-                    .eq("clerk_user_id", clerk_user_id)
+                    .eq("clerk_user_id", clerk_user_id).eq("media_url",url)
                     .limit(1)
                     .execute()
             )
@@ -75,7 +76,7 @@ class StatusUpdater:
                     self.supabase
                         .table("reports")
                         .insert(
-                            { "logs":logs,"clerk_user_id":clerk_user_id}
+                            { "logs":logs,"clerk_user_id":clerk_user_id,"media_url":url}
                         ).execute()
                 )
             return result
@@ -84,14 +85,9 @@ class StatusUpdater:
                 logger.error(f"Failed to update status: {e}")
                 # Don't fail the entire process if status update fails
                 return None
-    async def update_separate_key(
-        self, 
-        key,
-        value
-    ):
-        """Update processing status in Supabase."""
-        try:
-                        
+    async def update_processed_claims(self, claims,processed_claims,url):
+
+                            
             clerk_user_id = "user_367vrvxLc30byC5Ai3btLJA5HNG"
 
             # 1. Look for existing report
@@ -100,20 +96,54 @@ class StatusUpdater:
                     .table("reports")
                     .select("report_id")
                     .eq("clerk_user_id", clerk_user_id)
+                    .eq("media_url", url)
+                    .limit(1)
+                    .execute()
+            )
+
+            if existing.data:
+                report_id = existing.data[0]["report_id"]
+                result = (
+                        self.supabase
+                            .table("reports")
+                            .update({"claims": processed_claims})
+                            .eq("report_id", report_id)
+                            .execute()
+                    )
+
+    async def update_separate_key(
+        self, 
+        key,
+        value,
+        url
+    ):
+        """Update processing status in Supabase."""
+        try:
+                            
+            clerk_user_id = "user_367vrvxLc30byC5Ai3btLJA5HNG"
+
+            # 1. Look for existing report
+            existing = (
+                self.supabase
+                    .table("reports")
+                    .select("report_id")
+                    .eq("clerk_user_id", clerk_user_id)
+                    .eq("media_url", url)
                     .limit(1)
                     .execute()
             )
 
             if existing.data:
                 # 2a. Update existing
+                
                 report_id = existing.data[0]["report_id"]
                 result = (
-                    self.supabase
-                        .table("reports")
-                        .update( {key:value})
-                        .eq("report_id", report_id)
-                        .execute()
-                )
+                        self.supabase
+                            .table("reports")
+                            .update( {key:value})
+                            .eq("report_id", report_id)
+                            .execute()
+                    )
                 return result
                 
         except Exception as e:

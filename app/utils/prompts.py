@@ -17,7 +17,7 @@ Return a JSON array of claims with structure:
 {{
   "claims": [
     {{
-      "id": "c1",
+      "id": "1",
       "text": "claim text",
       "type": "fact",
       "prominence": 0.8,
@@ -36,7 +36,7 @@ Type: {claim_type}
 Named Entities: {entities}
 Time References: {time_refs}
 
-Create 4-8 targeted search queries with:
+Create 2 targeted search queries with:
 1. Evidence type preferences: primary/official, factcheck, reference, news, academic
 2. Time windows when relevant
 3. Geographic disambiguation if needed

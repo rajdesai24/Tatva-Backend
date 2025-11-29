@@ -9,6 +9,9 @@ import asyncio
 import logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
+from pydantic import BaseModel
+from fastapi.concurrency import run_in_threadpool
+import asyncio
 
 
 app = FastAPI(
@@ -56,13 +59,13 @@ async def process_fact_check_background( input_data):
 
 # app/main.py - Add this endpoint
 from app.services.transcriber import transcribe_url
-
+class FactCheckRequest(BaseModel):
+    url: str
+    clerk_user_id:str
 @app.post("/api/v1/fact-check-url",response_model=TattvaOutput)
 async def fact_check_url(
-    url: str,
+    request: FactCheckRequest,  # Body parameter
     background_tasks: BackgroundTasks,response:Response,
-    beliefs: Optional[list] = None,
-    twitter_token: Optional[str] = None
 ):
     """
     Fact-check content from a URL.
@@ -73,19 +76,20 @@ async def fact_check_url(
     - News articles
     - Blog posts
     """
-
+    url = request.url
+    beliefs=None
     # Step 1: Transcribe URL to normalized format
     logger.info(f"Processing URL: {url}")
-    transcribed_data = transcribe_url(url, beliefs)
-    print(transcribed_data)
+    transcribed_data = await run_in_threadpool(transcribe_url, url, beliefs)
+    transcribed_data["url"] = request.url
     # Check if transcription was successful
     if transcribed_data["status"] != "Success":
         raise HTTPException(
             status_code=400,
             detail=transcribed_data["metadata"].get("error", "Failed to process URL")
         )
-    
-    background_tasks.add_task(process_fact_check_background, transcribed_data)
+    asyncio.create_task(process_fact_check_background(transcribed_data))
+    # background_tasks.add_task(process_fact_check_background, transcribed_data)
     response.status_code = status.HTTP_200_OK
     return response
         

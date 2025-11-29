@@ -1,15 +1,17 @@
 # app/services/evidence_gatherer.py
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.prompts import ChatPromptTemplate
-from langchain_community.utilities import DuckDuckGoSearchAPIWrapper
+from langchain_community.tools.tavily_search import TavilySearchResults
 from typing import List, Dict
 import json
 import re
 from app.utils.prompts import EVIDENCE_EVALUATION_PROMPT
 from app.config import get_settings
 import logging
+
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
+
 
 class EvidenceGatherer:
     def __init__(self):
@@ -20,7 +22,7 @@ class EvidenceGatherer:
             google_api_key=settings.GOOGLE_API_KEY,
             max_output_tokens=settings.MAX_TOKENS
         )
-        self.search = DuckDuckGoSearchAPIWrapper()
+        self.search = TavilySearchResults(max_results=5)
     
     def gather_evidence(self, claim: Dict, query_plan: List[Dict]) -> Dict:
         """Gather and evaluate evidence for a claim."""
@@ -29,19 +31,19 @@ class EvidenceGatherer:
         
         for query_item in query_plan[:6]:
             try:
-                results = self.search.results(
-                    query_item['query'],
-                    max_results=5
-                )
+                results = self.search.invoke(query_item['query'])
                 
-                for result in results:
+                # Handle different response formats
+                parsed_results = self._parse_tavily_results(results)
+                
+                for result in parsed_results:
                     domain = self._extract_domain(result.get('link', ''))
                     if domains_seen.get(domain, 0) < 2:
                         all_results.append(result)
                         domains_seen[domain] = domains_seen.get(domain, 0) + 1
                 
             except Exception as e:
-                print(f"Search error for query '{query_item['query']}': {e}")
+                logger.error(f"Search error for query '{query_item['query']}': {e}")
                 continue
         
         if not all_results:
@@ -54,6 +56,41 @@ class EvidenceGatherer:
         evidence_evaluation = self._evaluate_evidence(claim, all_results)
         evidence_evaluation['search_successful'] = True
         return evidence_evaluation
+    
+    def _parse_tavily_results(self, results) -> List[Dict]:
+        """Parse Tavily results into a consistent format."""
+        parsed = []
+        
+        # If results is a string, try to parse as JSON
+        if isinstance(results, str):
+            try:
+                results = json.loads(results)
+            except json.JSONDecodeError:
+                logger.warning(f"Could not parse results string: {results[:100]}")
+                return parsed
+        
+        # If results is not a list, wrap it
+        if not isinstance(results, list):
+            results = [results]
+        
+        for result in results:
+            # If result is a string, try to parse it
+            if isinstance(result, str):
+                try:
+                    result = json.loads(result)
+                except json.JSONDecodeError:
+                    # Skip unparseable strings
+                    continue
+            
+            # If result is a dict, normalize the keys
+            if isinstance(result, dict):
+                parsed.append({
+                    'title': result.get('title', 'N/A'),
+                    'link': result.get('url', result.get('link', '')),
+                    'snippet': result.get('content', result.get('snippet', ''))
+                })
+        
+        return parsed
     
     def _extract_domain(self, url: str) -> str:
         """Extract domain from URL."""
@@ -93,7 +130,7 @@ class EvidenceGatherer:
             
             return json.loads(content)
         except json.JSONDecodeError as e:
-            print(f"Failed to parse evidence evaluation JSON: {e}")
+            logger.error(f"Failed to parse evidence evaluation JSON: {e}")
             return {
                 "evidence_items": [],
                 "overall_assessment": "Failed to evaluate evidence"
